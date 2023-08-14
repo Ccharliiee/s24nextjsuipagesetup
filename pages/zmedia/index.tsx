@@ -1,6 +1,6 @@
 //domian.com/zmedia
 
-import { Card, CardHeader, CardBody } from "@nextui-org/react";
+import { Card, CardHeader, CardBody, Avatar, Badge } from "@nextui-org/react";
 import {
   Table,
   TableHeader,
@@ -14,38 +14,31 @@ import NextLink from "next/link";
 export default function MediaHomepage() {
   return (
     <Card>
-      <CardHeader>This is MediaHomepage</CardHeader>
+      <CardHeader className="text-center justify-center align-center flex gap-3 text-4xl">
+        This is MediaHomepage
+      </CardHeader>
       <CardBody>
-        <Table isStriped aria-label="Media collection table">
+        <Table
+          isStriped
+          hideHeader
+          removeWrapper
+          aria-label="Media collection table"
+        >
           <TableHeader>
             <TableColumn>NAME</TableColumn>
-            <TableColumn>TIME</TableColumn>
-            <TableColumn>STATUS</TableColumn>
           </TableHeader>
           <TableBody>
             <TableRow key="1">
-              <TableCell>
-                <a href="https://nextjs.org/docs">NEXTJS learning</a>
-              </TableCell>
-              <TableCell>1 day ago</TableCell>
-              <TableCell>Active</TableCell>
-            </TableRow>
-            <TableRow key="2">
-              <TableCell>NEXTUI learning</TableCell>
-              <TableCell>19 hr ago</TableCell>
-              <TableCell>Active</TableCell>
-            </TableRow>
-            <TableRow key="3">
-              <TableCell>
+              <TableCell className="text-center justify-center align-center flex gap-3 text-2xl font-bold">
                 <NextLink href="/zmedia/zmediadetails">zmediadetails</NextLink>
+                <Badge content="5" color="primary">
+                  <Avatar
+                    radius="md"
+                    size="md"
+                    src="https://i.pravatar.cc/300?u=a042581f4e29026709d"
+                  />
+                </Badge>
               </TableCell>
-              <TableCell>3 hr ago</TableCell>
-              <TableCell>Active</TableCell>
-            </TableRow>
-            <TableRow key="4">
-              <TableCell>Wildfires</TableCell>
-              <TableCell>4 hr ago</TableCell>
-              <TableCell>Active</TableCell>
             </TableRow>
           </TableBody>
         </Table>

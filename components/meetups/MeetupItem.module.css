@@ -25,6 +25,10 @@
   color: #2c292b;
 }
 
+.content address {
+  color: #2c292b;
+}
+
 .actions {
   padding: 1.5rem;
   text-align: center;

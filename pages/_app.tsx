@@ -4,11 +4,15 @@ import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { fontSans, fontMono } from "@/config/fonts";
 import type { AppProps } from "next/app";
 
+import Layout from "@/components/layout/Layout";
+
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <NextUIProvider>
       <NextThemesProvider attribute="class" defaultTheme="dark">
-        <Component {...pageProps} />
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
       </NextThemesProvider>
     </NextUIProvider>
   );

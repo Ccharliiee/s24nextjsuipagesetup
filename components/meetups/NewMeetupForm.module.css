@@ -21,6 +21,8 @@
   border: 1px solid #ccc;
   padding: 0.25rem;
   width: 100%;
+  color: ivory;
+  background-color: lavender;
 }
 
 .actions {

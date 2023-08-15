@@ -4,14 +4,14 @@ import classes from "./MainNavigation.module.css";
 const MainNavigation = () => {
   return (
     <header className={classes.header}>
-      <div className={classes.logo}>React Meetups</div>
+      <div className={classes.logo}>NextUIV2 EEvent</div>
       <nav>
         <ul>
           <li>
-            <Link href="/">All Meetups</Link>
+            <Link href="/">All Events</Link>
           </li>
           <li>
-            <Link href="/new-meetup">Add New Meetup</Link>
+            <Link href="/newevent">Add New Event</Link>
           </li>
         </ul>
       </nav>

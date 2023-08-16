@@ -1,4 +1,4 @@
-import MeetupList from "@/components/meetups/MeetupList";
+import EeventList from "@/components/eevents/EeventList";
 
 const sistaticevents = [
   {
@@ -20,5 +20,5 @@ const sistaticevents = [
 ];
 
 export default function IndexPage() {
-  return <MeetupList meetups={sistaticevents} />;
+  return <EeventList eevents={sistaticevents} />;
 }

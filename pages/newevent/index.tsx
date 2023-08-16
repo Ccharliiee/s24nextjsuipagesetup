@@ -1,11 +1,11 @@
-import NewMeetupForm from "@/components/meetups/NewMeetupForm";
+import NewEeventForm from "@/components/eevents/NewEeventForm";
 
 const NewEventPage = () => {
   const addEventHandler = (enteredEventData: any) => {
     console.log(enteredEventData);
   };
 
-  return <NewMeetupForm onAddEvent={addEventHandler} />;
+  return <NewEeventForm onAddEvent={addEventHandler} />;
 };
 
 export default NewEventPage;

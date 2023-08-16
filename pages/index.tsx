@@ -19,15 +19,25 @@ const sistaticeventsapi = [
   },
 ];
 
-export const getStaticProps = async () => {
-  return {
-    props: {
-      eeventsapi: sistaticeventsapi,
-    },
-    revalidate: 30,
-  };
-};
+// export const getStaticProps = async () => {
+//   return {
+//     props: {
+//       eeventsapi: sistaticeventsapi,
+//     },
+//     revalidate: 30,
+//   };
+// };
 
 export default function IndexPage(props: { eeventsapi: any }) {
   return <EeventList eevents={props.eeventsapi} />;
 }
+
+export const getServerSideProps = async (context: { req: any; res: any }) => {
+  const req = context.req;
+  const res = context.res;
+  return {
+    props: {
+      eeventsapi: sistaticeventsapi,
+    },
+  };
+};

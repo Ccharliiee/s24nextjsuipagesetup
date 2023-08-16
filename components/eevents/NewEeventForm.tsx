@@ -1,9 +1,9 @@
 import { useRef } from "react";
 
 import Card from "../ui/Card";
-import classes from "./NewMeetupForm.module.css";
+import classes from "./NewEeventForm.module.css";
 
-const NewMeetupForm = (props: any) => {
+const NewEeventForm = (props: any) => {
   const titleInputRef = useRef<HTMLInputElement>(null);
   const imageInputRef = useRef<HTMLInputElement>(null);
   const addressInputRef = useRef<HTMLInputElement>(null);
@@ -17,25 +17,25 @@ const NewMeetupForm = (props: any) => {
     const enteredAddress = addressInputRef.current;
     const enteredDescription = descriptionInputRef.current;
 
-    const meetupData = {
+    const eeventData = {
       title: enteredTitle,
       image: enteredImage,
       address: enteredAddress,
       description: enteredDescription,
     };
 
-    props.onAddEvent(meetupData);
+    props.onAddEvent(eeventData);
   };
 
   return (
     <Card>
       <form className={classes.form} onSubmit={submitHandler}>
         <div className={classes.control}>
-          <label htmlFor="title">Meetup Title</label>
+          <label htmlFor="title">Eevent Title</label>
           <input type="text" required id="title" ref={titleInputRef} />
         </div>
         <div className={classes.control}>
-          <label htmlFor="image">Meetup Image</label>
+          <label htmlFor="image">Eevent Image</label>
           <input type="url" required id="image" ref={imageInputRef} />
         </div>
         <div className={classes.control}>
@@ -59,4 +59,4 @@ const NewMeetupForm = (props: any) => {
   );
 };
 
-export default NewMeetupForm;
+export default NewEeventForm;

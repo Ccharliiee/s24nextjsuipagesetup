@@ -1,6 +1,6 @@
 import EeventList from "@/components/eevents/EeventList";
 
-const sistaticevents = [
+const sistaticeventsapi = [
   {
     id: "ik1",
     title: "A First staticevent",
@@ -19,6 +19,14 @@ const sistaticevents = [
   },
 ];
 
-export default function IndexPage() {
-  return <EeventList eevents={sistaticevents} />;
+export const getStaticProps = async () => {
+  return {
+    props: {
+      eeventsapi: sistaticeventsapi,
+    },
+  };
+};
+
+export default function IndexPage(props: { eeventsapi: any }) {
+  return <EeventList eevents={props.eeventsapi} />;
 }

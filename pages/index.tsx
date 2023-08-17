@@ -1,31 +1,38 @@
 import EeventList from "@/components/eevents/EeventList";
 
-const sistaticeventsapi = [
-  {
-    id: "ik1",
-    title: "A First staticevent",
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Stadtbild_M%C3%BCnchen.jpg/1280px-Stadtbild_M%C3%BCnchen.jpg",
-    address: "5 street, One City",
-    description: "This is a first staticevent!",
-  },
-  {
-    id: "ik2",
-    title: "A Second staticevent",
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/b/b6/Mount_Everest_as_seen_from_Drukair2_PLW_edit_Cropped.jpg",
-    address: "10 ave, Tea City",
-    description: "This is a second staticevent!",
-  },
-];
+import { MongoClient, ServerApiVersion } from "mongodb";
 
 export const getStaticProps = async () => {
-  return {
-    props: {
-      eeventsapi: sistaticeventsapi,
+  const client = new MongoClient(process.env.MONGODB_URL ?? "", {
+    serverApi: {
+      version: ServerApiVersion.v1,
+      strict: true,
+      deprecationErrors: true,
     },
-    revalidate: 30,
-  };
+  });
+
+  try {
+    await client.connect();
+    const db = client.db();
+    const eeventsCollection = db.collection("Eeventscc");
+    const eevents = await eeventsCollection.find().toArray();
+    console.log("You successfully connected to MongoDB!");
+    return {
+      props: {
+        eeventsapi: eevents.map((eevent) => ({
+          title: eevent.title,
+          address: eevent.address,
+          image: eevent.image,
+          id: eevent._id.toString(),
+        })),
+      },
+      revalidate: 30,
+    };
+  } catch (err) {
+    console.log("failed to load eventsdata");
+  } finally {
+    await client.close();
+  }
 };
 
 export default function IndexPage(props: { eeventsapi: any }) {

@@ -1,6 +1,7 @@
 import EeventList from "@/components/eevents/EeventList";
 
 import { MongoClient, ServerApiVersion } from "mongodb";
+import Head from "next/head";
 
 export const getStaticProps = async () => {
   const client = new MongoClient(process.env.MONGODB_URL ?? "", {
@@ -26,7 +27,7 @@ export const getStaticProps = async () => {
           id: eevent._id.toString(),
         })),
       },
-      revalidate: 30,
+      revalidate: 1,
     };
   } catch (err) {
     console.log("failed to load eventsdata");
@@ -36,7 +37,16 @@ export const getStaticProps = async () => {
 };
 
 export default function IndexPage(props: { eeventsapi: any }) {
-  return <EeventList eevents={props.eeventsapi} />;
+  return (
+    <>
+      <Head>
+        <title>List of Events</title>
+        <meta name="viewport" content="width=device-width" />
+        <meta name="description" content="Explore a List of Events" />
+      </Head>
+      <EeventList eevents={props.eeventsapi} />
+    </>
+  );
 }
 
 // export const getServerSideProps = async (context: { req: any; res: any }) => {

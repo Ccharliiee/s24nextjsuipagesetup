@@ -31,11 +31,11 @@ const NewEeventForm = (props: any) => {
     <Card>
       <form className={classes.form} onSubmit={submitHandler}>
         <div className={classes.control}>
-          <label htmlFor="title">Eevent Title</label>
+          <label htmlFor="title">Event Title</label>
           <input type="text" required id="title" ref={titleInputRef} />
         </div>
         <div className={classes.control}>
-          <label htmlFor="image">Eevent Image</label>
+          <label htmlFor="image">Event Image</label>
           <input type="url" required id="image" ref={imageInputRef} />
         </div>
         <div className={classes.control}>

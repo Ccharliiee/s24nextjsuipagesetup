@@ -12,10 +12,10 @@ const NewEeventForm = (props: any) => {
   const submitHandler = (event: any) => {
     event.preventDefault();
 
-    const enteredTitle = titleInputRef.current;
-    const enteredImage = imageInputRef.current;
-    const enteredAddress = addressInputRef.current;
-    const enteredDescription = descriptionInputRef.current;
+    const enteredTitle = titleInputRef.current?.value;
+    const enteredImage = imageInputRef.current?.value;
+    const enteredAddress = addressInputRef.current?.value;
+    const enteredDescription = descriptionInputRef.current?.value;
 
     const eeventData = {
       title: enteredTitle,

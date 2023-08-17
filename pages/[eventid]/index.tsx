@@ -43,7 +43,7 @@ export const getStaticPaths = async () => {
     const eeventsid = await eeventsCollection.find({}, { _id: true }).toArray();
     console.log("You successfully connected to MongoDB!");
     return {
-      fallback: false,
+      fallback: "blocking",
       paths: eeventsid.map((eeventid) => ({
         params: { eventid: eeventid._id.toString() },
       })),

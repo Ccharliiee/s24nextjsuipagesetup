@@ -1,5 +1,6 @@
 import EeventDetail from "@/components/eevents/EeventDetails";
 import { MongoClient, ObjectId, ServerApiVersion } from "mongodb";
+import Head from "next/head";
 
 const EeventDetails = (props: {
   id: any;
@@ -9,13 +10,20 @@ const EeventDetails = (props: {
   description: any;
 }) => {
   return (
-    <EeventDetail
-      id={props.id}
-      image={props.image}
-      title={props.title}
-      address={props.address}
-      description={props.description}
-    />
+    <>
+      <Head>
+        <title>{props.title}</title>
+        <meta name="viewport" content="width=device-width" />
+        <meta name="description" content={props.description} />
+      </Head>
+      <EeventDetail
+        id={props.id}
+        image={props.image}
+        title={props.title}
+        address={props.address}
+        description={props.description}
+      />{" "}
+    </>
   );
 };
 

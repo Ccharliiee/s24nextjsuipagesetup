@@ -1,4 +1,5 @@
 import EeventDetail from "@/components/eevents/EeventDetails";
+import { MongoClient, ObjectId, ServerApiVersion } from "mongodb";
 
 const EeventDetails = (props: {
   id: any;
@@ -19,36 +20,68 @@ const EeventDetails = (props: {
 };
 
 export const getStaticPaths = async () => {
-  return {
-    fallback: false,
-    paths: [
-      {
-        params: {
-          eventid: "ik1",
-        },
-      },
-      {
-        params: {
-          eventid: "ik2",
-        },
-      },
-    ],
-  };
+  const client = new MongoClient(process.env.MONGODB_URL ?? "", {
+    serverApi: {
+      version: ServerApiVersion.v1,
+      strict: true,
+      deprecationErrors: true,
+    },
+  });
+
+  try {
+    await client.connect();
+    const db = client.db();
+    const eeventsCollection = db.collection("Eeventscc");
+    const eeventsid = await eeventsCollection.find({}, { _id: true }).toArray();
+    console.log("You successfully connected to MongoDB!");
+    return {
+      fallback: false,
+      paths: eeventsid.map((eeventid) => ({
+        params: { eventid: eeventid._id.toString() },
+      })),
+    };
+  } catch (err) {
+    console.log("failed to load eventsiddata");
+  } finally {
+    await client.close();
+  }
 };
 
 export const getStaticProps = async (context: { params: { eventid: any } }) => {
   const eeventId = context.params.eventid;
-  return {
-    props: {
-      id: eeventId,
-      image:
-        "https://images.unsplash.com/photo-1573270689103-d7a4e42b609a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
-      title: "First Event",
-      address: "5 street, One City",
-      description: "This is a first Event",
+
+  const client = new MongoClient(process.env.MONGODB_URL ?? "", {
+    serverApi: {
+      version: ServerApiVersion.v1,
+      strict: true,
+      deprecationErrors: true,
     },
-    revalidate: 30,
-  };
+  });
+
+  try {
+    await client.connect();
+    const db = client.db();
+    const eeventsCollection = db.collection("Eeventscc");
+    const eevent = await eeventsCollection.findOne({
+      _id: new ObjectId(eeventId),
+    });
+    console.log("You successfully connected to MongoDB!");
+
+    return {
+      props: {
+        id: eeventId,
+        image: eevent?.image,
+        title: eevent?.title,
+        address: eevent?.address,
+        description: eevent?.description,
+      },
+      revalidate: 1,
+    };
+  } catch (err) {
+    console.log("failed to load eventdata");
+  } finally {
+    await client.close();
+  }
 };
 
 export default EeventDetails;

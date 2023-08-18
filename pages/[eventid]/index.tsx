@@ -40,7 +40,9 @@ export const getStaticPaths = async () => {
     await client.connect();
     const db = client.db();
     const eeventsCollection = db.collection("Eeventscc");
-    const eeventsid = await eeventsCollection.find({}, { _id: true }).toArray();
+    const eeventsid = await eeventsCollection
+      .find({}, { projection: { _id: 1 } })
+      .toArray();
     console.log("You successfully connected to MongoDB!");
     return {
       fallback: "blocking",

@@ -1,20 +1,11 @@
 import EeventList from "@/components/eevents/EeventList";
-
-import { MongoClient, ServerApiVersion } from "mongodb";
+import { MmongoClient } from "@/dbapihelper/mongodbclienthelper";
 import Head from "next/head";
 
 export const getStaticProps = async () => {
-  const client = new MongoClient(process.env.MONGODB_URL ?? "", {
-    serverApi: {
-      version: ServerApiVersion.v1,
-      strict: true,
-      deprecationErrors: true,
-    },
-  });
-
   try {
-    await client.connect();
-    const db = client.db();
+    await MmongoClient.connect();
+    const db = MmongoClient.db();
     const eeventsCollection = db.collection("Eeventscc");
     const eevents = await eeventsCollection.find().toArray();
     console.log("You successfully connected to MongoDB!");
@@ -32,7 +23,7 @@ export const getStaticProps = async () => {
   } catch (err) {
     console.log("failed to load eventsdata");
   } finally {
-    await client.close();
+    await MmongoClient.close();
   }
 };
 

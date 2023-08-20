@@ -1,5 +1,6 @@
 import EeventDetail from "@/components/eevents/EeventDetails";
-import { MongoClient, ObjectId, ServerApiVersion } from "mongodb";
+import { MmongoClient } from "@/dbapihelper/mongodbclienthelper";
+import { ObjectId } from "mongodb";
 import Head from "next/head";
 
 const EeventDetails = (props: {
@@ -28,17 +29,9 @@ const EeventDetails = (props: {
 };
 
 export const getStaticPaths = async () => {
-  const client = new MongoClient(process.env.MONGODB_URL ?? "", {
-    serverApi: {
-      version: ServerApiVersion.v1,
-      strict: true,
-      deprecationErrors: true,
-    },
-  });
-
   try {
-    await client.connect();
-    const db = client.db();
+    await MmongoClient.connect();
+    const db = MmongoClient.db();
     const eeventsCollection = db.collection("Eeventscc");
     const eeventsid = await eeventsCollection
       .find({}, { projection: { _id: 1 } })
@@ -53,24 +46,16 @@ export const getStaticPaths = async () => {
   } catch (err) {
     console.log("failed to load eventsiddata");
   } finally {
-    await client.close();
+    await MmongoClient.close();
   }
 };
 
 export const getStaticProps = async (context: { params: { eventid: any } }) => {
   const eeventId = context.params.eventid;
 
-  const client = new MongoClient(process.env.MONGODB_URL ?? "", {
-    serverApi: {
-      version: ServerApiVersion.v1,
-      strict: true,
-      deprecationErrors: true,
-    },
-  });
-
   try {
-    await client.connect();
-    const db = client.db();
+    await MmongoClient.connect();
+    const db = MmongoClient.db();
     const eeventsCollection = db.collection("Eeventscc");
     const eevent = await eeventsCollection.findOne({
       _id: new ObjectId(eeventId),
@@ -90,7 +75,7 @@ export const getStaticProps = async (context: { params: { eventid: any } }) => {
   } catch (err) {
     console.log("failed to load eventdata");
   } finally {
-    await client.close();
+    await MmongoClient.close();
   }
 };
 
